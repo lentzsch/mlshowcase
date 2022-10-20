@@ -19,6 +19,7 @@ class Car{
     }
 
     #move() {
+        //accelerates car
         if (this.controls.forward) {
             this.speed += this.acceleration;
         }
@@ -26,6 +27,7 @@ class Car{
             this.speed -= this.acceleration;
         }
 
+        //makes sure car doesn't go faster than max forward/reverse speeds
         if (this.speed > this.maxSpeed) {
             this.speed = this.maxSpeed;
         }
@@ -33,16 +35,20 @@ class Car{
             this.speed = -this.maxSpeed / 2;
         }
 
+        //applies friction to slow down car if arrow keys are released
         if (this.speed > 0) {
             this.speed -= this.friction;
         }
         if (this.speed < 0) {
             this.speed += this.friction;
         }
+        //solves problem of car moving slightly due to friction never bringing the speed to absolute zero.
         if (Math.abs(this.speed) < this.friction) {
             this.speed = 0
         }
 
+        //reverses the steering input if car is in reverse to better mimic real life controls
+        //also prevents car from turning if not moving
         if (this.speed != 0) {
             const flip = this.speed > 0 ? 1 : -1;
             if (this.controls.left) {
@@ -53,6 +59,7 @@ class Car{
             }
         }
 
+        //Makes sure the car remains at speed regardless of angle/direction of travel
         this.x -= Math.sin(this.angle) * this.speed;
         this.y -= Math.cos(this.angle) * this.speed;
     }
