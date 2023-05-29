@@ -10,6 +10,7 @@ class Car{
         this.maxSpeed = 3;
         this.friction = 0.05;
         this.angle = 0;
+        this.damaged = false;
 
         this.sensor = new Sensor(this);
         this.controls = new Controls();
@@ -18,7 +19,20 @@ class Car{
     update (roadBorders) {
         this.#move();
         this.polygon = this.#createPolygon();
+        this.damaged = this.#assesDamage(roadBorders);
         this.sensor.update(roadBorders);
+    }
+
+    assessDamage(roadBorders) {
+        
+        for (let i = 0; i < roadBorders.length; i++) {
+            if (polysIntersect(this.polygon, roadBorders[i])){
+                return true;
+            }
+        }
+
+        return false;
+        
     }
 
     #createPolygon(){
@@ -26,6 +40,7 @@ class Car{
         const rad = Math.hypot(this.width, this.height)/2;
         const alpha = Math.atan2(this.width, this.height);
 
+        //gets the four corners of the car hitbox
         points.push({
             x: this.x - Math.sin(this.angle - alpha)*rad,
             y: this.y - Math.cos(this.angle - alpha)*rad
