@@ -13,6 +13,9 @@ const traffic = [
 animate();
 
 function animate () {
+    for (let i = 0; i < traffic.length; i++){
+        traffic[i].update(road.borders);
+    }
     car.update(road.borders);
 
     canvas.height = window.innerHeight;
@@ -21,6 +24,11 @@ function animate () {
     ctx.translate(0, -car.y + canvas.height*0.7);
 
     road.draw(ctx);
+
+    for(let i = 0; i < traffic.length; i++){
+        traffic[i].draw(ctx);
+    }
+    
     car.draw(ctx);
 
     ctx.restore();
