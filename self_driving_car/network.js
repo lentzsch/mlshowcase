@@ -1,3 +1,14 @@
+class NeuralNetwork {
+    constructor (neuronCounts) {
+        this.levels = [];
+        for (let i = 0; i < neuronCounts.length - 1; i++) {
+            this.levels.push(new Level (
+                neuronCounts[i], neuronCounts[i + 1]
+            ));
+        }
+    }
+}
+
 class Level {
     constructor (inputCount, outputCount) {
         this.inputs = new Array(inputCount);
