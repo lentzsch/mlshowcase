@@ -9,7 +9,7 @@ class Level {
             this.weights[i] = new Array(outputCount)
         }
 
-        level.#randomize(this);
+        Level.#randomize(this);
     }
 
     static #randomize(level) {
@@ -18,5 +18,10 @@ class Level {
                 level.weights[i][j] = Math.random() * 2 - 1;
             }
         }
+
+        for (let i = 0; i < level.biases.length; i++) {
+            level.biases[i] = Math.random() * 2 - 1;
+        }
     }
+    
 }
